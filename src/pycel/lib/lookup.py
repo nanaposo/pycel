@@ -358,10 +358,22 @@ def row(ref):
         return ref.row
 
 
-# def rows(value):
+@excel_helper()
+def rows(array):
     # Excel reference: https://support.office.com/en-us/article/
     #   rows-function-b592593e-3fc2-47f2-bec1-bda493811597
+    if not list_like(array) or not list_like(array[0]):
+        return VALUE_ERROR
 
+    return len(array)
+
+
+@excel_helper()
+def countblank(array):
+    if not list_like(array) or not list_like(array[0]):
+        return VALUE_ERROR
+
+    return len([x for x in array if x == ''])
 
 # def rtd(value):
     # Excel reference: https://support.office.com/en-us/article/

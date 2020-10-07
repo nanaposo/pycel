@@ -222,9 +222,17 @@ def right(text, num_chars=1):
     #   right-rightb-functions-240267ee-9afa-4639-a02b-f19e1786cf2f
 
 
-# def search(text):
+@excel_helper(cse_params=(0, 1, 2), number_params=2)
+def search(find_text, within_text, start_num=1):
     # Excel reference: https://support.office.com/en-us/article/
-    #   search-searchb-functions-9ab04538-0e55-4719-a72e-b6f54513b495
+    #   FIND-FINDB-functions-C7912941-AF2A-4BDF-A553-D0D89B0A0628
+    find_text = coerce_to_string(find_text).lower()
+    within_text = coerce_to_string(within_text).lower()
+    found = within_text.find(find_text, start_num - 1)
+    if found == -1:
+        return VALUE_ERROR
+    else:
+        return found + 1
 
 
 # def searchb(text):

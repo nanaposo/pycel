@@ -18,6 +18,7 @@ from pycel.excelutil import (
     AddressCell,
     AddressRange,
     build_wildcard_re,
+    coerce_to_string,
     ERROR_CODES,
     ExcelCmp,
     list_like,
@@ -374,6 +375,13 @@ def countblank(array):
         return VALUE_ERROR
 
     return len([x for x in array if x == ''])
+
+
+@excel_helper(cse_params=(0,))
+def isblank(value):
+    value = coerce_to_string(value)
+    return value == ''
+
 
 # def rtd(value):
     # Excel reference: https://support.office.com/en-us/article/

@@ -190,6 +190,7 @@ class ExcelCompiler:
             )),
             # serialize the workbook filename (not the serialization path)
             filename=self.filename,
+            plugins=self._plugin_modules,
         ))
         if not filename:
             filename = self.filename + ('.json' if is_json else '.yml')
@@ -229,10 +230,10 @@ class ExcelCompiler:
             data = YAML().load(f)
 
         excel = _CompiledImporter(filename, data)
-        excel_compiler = cls(excel=excel, cycles=data.get('cycles', False))
+        excel_compiler = cls(excel=excel, cycles=data.get('cycles', False), plugins=data.get('plugins', ()))
         excel.compiler = excel_compiler
-        if 'cycles' in data:
-            del data['cycles']
+        for field in ('cycles', 'plugins'):
+            data.pop(field, None)
 
         def add_line_numbers(cell_addr, line_number):
             formula = excel_compiler.cell_map[cell_addr].formula
